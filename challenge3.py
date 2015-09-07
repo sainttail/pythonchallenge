@@ -1,9 +1,12 @@
+import re
+
+import requests
+
 __author__ = 'Eakawat'
 
 
 def problem3():
-    text = """
-            kAewtloYgcFQaJNhHVGxXDiQmzjfcpYbzxlWrVcqsmUbCunkfxZWDZjUZMiGqhRRiUvGmYmvnJIHEmbT
+    text = """kAewtloYgcFQaJNhHVGxXDiQmzjfcpYbzxlWrVcqsmUbCunkfxZWDZjUZMiGqhRRiUvGmYmvnJIHEmbT
 MUKLECKdCthezSYBpIElRnZugFAxDRtQPpyeCBgBfaRVvvguRXLvkAdLOeCKxsDUvBBCwdpMMWmuELeG
 ENihrpCLhujoBqPRDPvfzcwadMMMbkmkzCCzoTPfbRlzBqMblmxTxNniNoCufprWXxgHZpldkoLCrHJq
 vYuyJFCZtqXLhWiYzOXeglkzhVJIWmeUySGuFVmLTCyMshQtvZpPwuIbOHNoBauwvuJYCmqznOBgByPw
@@ -1254,23 +1257,25 @@ dCdFLtBQPtFQuCdKOrpndJNUFQIDSbetUKylhSUjcDVtbiQrWMRQhAwGUZyPneCGUjGBBTkLqxLAXXtB
 KfErkDaWMFZZeuqDmXKJEGHyToPUhPphfVhgUZgbIuRAtWnroImpJKqqmEZqeNQCKzhjIkKQHURWLXFw
 PBuijeoTSpsVLaOGuLVjMZXkBvVXwUuHfBihziiavGSYofPNeKsTXruMUumRRPQJzvSzJkKbtSipiqBd
             """
-
-    result = ""
-    success_count = 0
-    for c in text:
-        if c.isupper() and (success_count < 3 or success_count > 3):
-            success_count += 1
-            result += c
-        elif c.islower() and success_count == 3:
-            success_count += 1
-            result += c
-        else:
-            success_count = 0
-            result = ""
-
-        if success_count == 7:
-            print(result)
-            break
+    match = re.findall(r'[a-z][A-Z][A-Z][A-Z][a-z][A-Z][A-Z][A-Z][a-z]', text)
+    print(match)
 
 
-problem3()
+def problem4():
+    has_next = True
+    nothing = 80865  # 8022 # 12345 # try 82683
+    while has_next:
+        print("call nothing : %d" % nothing)
+        r = requests.get("http://www.pythonchallenge.com/pc/def/linkedlist.php?nothing=%d" % nothing)
+        result = r.text
+        print(result)
+        nothing = int(result.split("and the next nothing is ")[-1])
+
+    result = "peak.html"
+
+
+def problem5():
+    pass
+
+
+problem5()
